@@ -4,9 +4,6 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>R and Shiny Services — Expert Consulting & Development</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -14,13 +11,18 @@
     <div class="container">
       <h1 class="brand">R and Shiny Services</h1>
       <nav>
-        <a href="#services" class="navlink">Services</a>
-        <a href="#workshops" class="navlink">Workshops</a>
-        <a href="#team" class="navlink">Team</a>
-        <a href="#contact" class="navlink">Contact</a>
+        <button class="menu-btn" aria-label="Toggle menu" aria-expanded="false">☰</button>
+        <ul class="nav-links">
+          <li data-section="01"><a href="#services" class="navlink">Services</a></li>
+          <li data-section="02"><a href="#workshops" class="navlink">Workshops</a></li>
+          <li data-section="03"><a href="#team" class="navlink">Team</a></li>
+          <li data-section="04"><a href="#contact" class="navlink">Contact</a></li>
+        </ul>
       </nav>
     </div>
   </header>
+
+  
 
   <main>
     <section class="hero">
@@ -34,7 +36,7 @@
       <h2 class="section-title">What We Do</h2>
       
       <div class="service-grid">
-        <div class="service-card">
+        <div class="service-card card">
           <h3>Shiny Applications</h3>
           <p class="service-intro">Build powerful, scalable interactive applications for your data workflows.</p>
           <ul>
@@ -45,7 +47,7 @@
           </ul>
         </div>
 
-        <div class="service-card">
+        <div class="service-card card">
           <h3>R Package Development</h3>
           <p class="service-intro">Custom R packages that streamline workflows and establish best practices across your organization.</p>
           <ul>
@@ -66,8 +68,8 @@
       </div>
 
       <div class="workshop-content">
-        <div class="workshop-block">
-          <h4>What You'll Learn</h4>
+        <div class="workshop-block card">
+          <h3>What You'll Learn</h3>
           <ul>
             <li>Build an R package from scratch using modern tools</li>
             <li>Design database-connected functions for automated KPI generation</li>
@@ -77,8 +79,8 @@
           </ul>
         </div>
 
-        <div class="workshop-block">
-          <h4>Is This Workshop Right For You?</h4>
+        <div class="workshop-block card">
+          <h3>Is This Workshop Right For You?</h3>
           <p>This workshop is perfect if you answer "yes" to any of these questions:</p>
           <ol>
             <li>Does your organization use R for data analysis or reporting?</li>
@@ -91,41 +93,64 @@
 
     <section id="team" class="container team-section">
       <h2 class="section-title">Meet the Team</h2>
-      <p class="team-intro">Combined 40+ years of R and Shiny expertise, serving organizations worldwide.</p>
-      
+            
       <div class="team-grid">
-        <div class="team-member">
+        <div class="team-member card">
           <h3><a href = "https://github.com/pachadotdev/">Mauricio Vargas Sepúlveda</a></h3>
           <p class="role">Creator of <a href="https://pacha.dev/d3po/">d3po</a></p>
           <p>Mauricio built d3po, a fully open-source interactive visualization library designed for government and NGO needs. His work focuses on accessible econometric tools for policy analysis.</p>
         </div>
         
-        <div class="team-member">
+        <div class="team-member card">
           <h3><a href="https://github.com/jbkunst">Joshua Kunst</a></h3>
           <p class="role">Creator of <a href="https://jkunst.com/highcharter/">highcharter</a></p>
           <p>Joshua developed highcharter, bringing enterprise-grade interactive visualizations to R. His package is used by organizations worldwide for production-ready dashboards.</p>
         </div>
       </div>
       
-      <p class="team-experience">Together, we have over thirty years of combined R and Shiny experience. Before starting this joint project we worked independently to provide solutions for government agencies, NGOs, research institutions, and private sector organizations across multiple countries.</p>
+      <p class="role">Together, we have over thirty years of combined R and Shiny experience. Before starting this joint project we worked independently to provide solutions for government agencies, NGOs, research institutions, and private sector organizations across multiple countries.</p>
+      <p class="role">Here is just one example of the libraries we have developed over the years:</p>
+
+      <div class="code-plot-row">
+        <div class="code-column">
+          <pre>
+library(tradestatistics)
+library(d3po)
+
+ots_data <- ots_create_tidy_data(reporters = "CHL",
+  years = 2023, table = "yrp")
+
+d3po(ots_data, width = 800, height = 600) %>%
+  po_treemap(daes(size = trade, group = partner_name)) %>%
+  po_labels(
+    title = "Top trading partners of Chile in 2023"
+  )
+          </pre>
+        </div>
+        <div class="plot-column">
+          <div id="htmlwidget-61e4e647deae543f6777" style="width:100%;height:487px;" class="d3po html-widget"></div>
+        </div>
+      </div>
     </section>
 
     <section id="contact" class="container contact-section">
       <h2 class="section-title">Let's Work Together</h2>
       <p class="contact-intro">Ready to enhance your R and Shiny capabilities? We'd love to hear about your project.</p>
       
-      <div class="contact-box">
+      <div class="contact-box card">
         <p class="contact-email">
           <span class="label">Email us:</span>
           <a href="mailto:contact@randshiny.com" class="email-link">contact@randshiny.com</a>
         </p>
-        <p class="contact-instructions">Share a brief description of your needs, and we'll respond with an estimate and recommended next steps.</p>
+        <p class="contact-instructions">Share a brief description of your needs, and we'll respond with an estimate and recommended next steps. We can book a short call free of charge to understand your requirements.</p>
       </div>
-
-      <br>
-
     </section>
+    </br>
   </main>
+
+  <div class="matrix-footer" aria-hidden="true">
+    <canvas id="matrix-canvas"></canvas>
+  </div>
 
   <footer class="site-footer">
     <div class="container">
@@ -133,34 +158,13 @@
     </div>
   </footer>
 
-  <script>
-    // smooth scrolling for navigation links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      });
-    });
-
-    // scrollspy for single-page nav
-    (function(){
-      const links = document.querySelectorAll('nav a.navlink');
-      const sections = Array.from(document.querySelectorAll('section[id]'));
-      function onScroll(){
-        const offset = window.innerHeight * 0.35;
-        let current = sections[0];
-        for(const sec of sections){
-          const rect = sec.getBoundingClientRect();
-          if(rect.top <= offset) current = sec;
-        }
-        links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#'+current.id));
-      }
-      window.addEventListener('scroll', onScroll, {passive:true});
-      document.addEventListener('DOMContentLoaded', onScroll);
-    })();
+  <script src="functions.js" defer></script>
+  <script src="d3po_files/libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+  <script src="d3po_files/libs/d3-7.9.0/d3.min.js"></script>
+  <script src="d3po_files/libs/d3po-1.0.0/d3po.min.js"></script>
+  <script src="d3po_files/libs/d3po-binding-1.0.3/d3po.js"></script>
+  <script type="application/json" data-for="htmlwidget-61e4e647deae543f6777">
+    {"x":{"data":[{"trade":37449226454.1,"partner_name":"China"},{"trade":28782085314.29,"partner_name":"Rest of the World"},{"trade":14307677666.97,"partner_name":"United States of America"},{"trade":6803034660.61,"partner_name":"Japan"},{"trade":6020496191.46,"partner_name":"Rep. of Korea"}],"type":"treemap","size":"trade","group":"partner_name","color":["#2a244a","#3d5e83","#7495a5","#89c5de","#c9e2fb"],"tiling":"Squarify","labels":{"align":"left","valign":"top"},"title":"Top trading partners of Chile in 2023","axis_labels":{"x":null,"y":null},"tooltip_template":"function(percentage, row) {\n        var pct = (percentage).toFixed(2) + '%';\n\n        var count = row && row.count != null ? row.count : '';\n        count = (count / 1000000000).toFixed(2) + 'B';\n\n        return 'Trade: ' + count + '<br/>Percentage: ' + pct;\n      }"},"evals":["tooltip_template"],"jsHooks":[]}
   </script>
 </body>
 </html>

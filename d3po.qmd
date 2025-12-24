@@ -1,0 +1,55 @@
+---
+title: D3po example
+format: html
+---
+
+```{r}
+library(d3po)
+library(tradestatistics)
+library(forcats)
+library(dplyr)
+
+fout <- "chl2023.rds"
+
+if (!file.exists(fout)) {
+    ots_data <- ots_create_tidy_data(
+        reporters = "CHL",
+        years = 2023,
+        table = "yrp"
+    )
+
+    saveRDS(ots_data, fout)
+} else {
+    ots_data <- readRDS(fout)
+}
+
+# top 4 + "rest of the world"
+ots_data <- ots_data %>%
+    group_by(partner_name) %>%
+    summarise(trade = sum(trade_value_usd_exp, na.rm = TRUE)) %>%
+    mutate(
+        partner_name = fct_lump_n(partner_name, n = 4, w = trade, other_level = "Rest of the World")
+    ) %>%
+    group_by(partner_name) %>%
+    summarise(trade = sum(trade, na.rm = TRUE)) %>%
+    arrange(desc(trade))
+
+my_pal <- c("#2a244a", "#3d5e83", "#7495a5", "#89c5de", "#c9e2fb")
+
+d3po(ots_data, width = 800, height = 600) %>%
+    po_treemap(daes(
+      size = trade, group = partner_name,
+      color = my_pal, tiling = "Squarify"
+    )) %>%
+    po_labels(title = "Top trading partners of Chile in 2023") %>%
+    po_tooltip(JS(
+    "function(percentage, row) {
+        var pct = (percentage).toFixed(2) + '%';
+
+        var count = row && row.count != null ? row.count : '';
+        count = (count / 1000000000).toFixed(2) + 'B';
+
+        return 'Trade: ' + count + '<br/>Percentage: ' + pct;
+      }"
+  ))
+```
